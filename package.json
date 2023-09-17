@@ -1,0 +1,35 @@
+{
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "uuid": "^9.0.1"
+  },
+  "name": "receipt-processor-challenge",
+  "description": "Build a webservice that fulfils the documented API. The API is described below. A formal definition is provided  in the [api.yml](./api.yml) file, but the information in this README is sufficient for completion of this challenge. We will use the  described API to test your solution.",
+  "version": "1.0.0",
+  "main": "app.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "mocha tests/app.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deveshithanawala/receipt-processor-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deveshithanawala/receipt-processor-challenge/issues"
+  },
+  "homepage": "https://github.com/deveshithanawala/receipt-processor-challenge#readme",
+  "devDependencies": {
+    "chai": "^4.3.8",
+    "chai-http": "^4.4.0",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
+  }
+}

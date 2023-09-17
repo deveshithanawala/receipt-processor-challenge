@@ -152,6 +152,8 @@ Breakdown:
   = 109 points
 ```
 
+Missing Addition of 6 points above because purchase day is odd so total should be 115 
+
 ---
 
 # FAQ
@@ -172,3 +174,15 @@ the reviewing engineer.
 ### How long do I have to complete the exercise?
 There is no time limit for the exercise. Out of respect for your time, we designed this exercise with the intent that it should take you a few hours. But, please
 take as much time as you need to complete the work.
+
+
+### Solution 
+
+Commands :
+
+1. node app.js to start the application
+2. To test example files open another terminal and use command:  curl -X POST -H "Content-Type: application/json" -d @examples/mandm-receipt.json http://localhost:3001/receipts/process
+The above command will make a POST request and return the recipt id 
+3. Next you can get the points by GET request : curl http://localhost:3001/receipts/id/points
+Replace id from the response generated after POST request
+4. For Unit Tests use the command npm test
