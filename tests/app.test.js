@@ -1,6 +1,3 @@
-// GITHUB 
-// Read Me
-// Dockerfile
 const { expect } = require('chai');
 const supertest = require('supertest');
 const app = require('../app'); 
@@ -96,12 +93,9 @@ describe('GET/receipts/:id/points',()=>{
               expect(postResponse.status).to.equal(200);
 
               const receiptId = postResponse.body.id;
-              console.log("Receipt id", receiptId);
             
               // Make the GET request using await
               const getResponse = await request.get(`/receipts/${receiptId}/points`);
-            
-              console.log("Get Response", getResponse.body);
               expect(getResponse.status).to.equal(200);
               expect(getResponse.body).to.have.property('points');
     

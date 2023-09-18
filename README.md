@@ -152,8 +152,6 @@ Breakdown:
   = 109 points
 ```
 
-Missing Addition of 6 points above because purchase day is odd so total should be 115 
-
 ---
 
 # FAQ
@@ -184,19 +182,80 @@ Ensure you have the following installed :
 2. npm
 3. Docker
 
+## Installing Node JS and npm
+
+### For Linux 
+  1. Open your terminal.
+
+  2. Update the package list:
+
+   ```bash
+   sudo apt-get update
+
+  3. Install Node JS and npm
+  `sudo apt-get install nodejs npm`
+  4. Verify the Installation
+   `node -v`
+   `npm -v`
+
+   You should be able to see the versions of node and npm installed on your system
+
+### Windows:
+
+1. Download the Node.js installer from the official website: Node.js Downloads.
+
+2. Run the installer and follow the installation instructions.
+
+3. After installation, open Command Prompt or PowerShell and verify the installation:
+
+   `node -v`
+   `npm -v`
+
+### macOS:
+
+1. Install Homebrew if you don't already have it.
+
+Open a terminal window and paste the following command to install Homebrew
+`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+
+2. Open your terminal.
+
+3. Install Node.js and npm using Homebrew:
+
+`brew install node`
+
+4. Verify the installation
+
+   `node -v`
+   `npm -v`
+
+
 ## Clone this Repository
-git clone https://github.com/yourusername/receipt-processing-service.git
+`git clone https://github.com/yourusername/receipt-processing-service.git`
 
-## Haviagte to Project Directory 
+## Navigate to Project Directory 
 
-cd receipt-processor-challenge 
+`cd receipt-processor-challenge` 
 
 ## Install Dependencies 
 
-npm install 
+`npm install` 
 
 ## To start the application
 `node app.js`
+
+## Docker 
+
+To containerize the service use the following command
+
+1. Build Docker Image
+
+`docker build -t receipt-service`
+
+2. Run the Docker container
+
+`docker run -p 8080:8080 receipt-service`
+
 
 ## To test POST Endpoint 
 There are some json files in the example folder 
@@ -222,13 +281,13 @@ Replace id from the response generated after POST request
 
 Endpoint: Process Receipts
 
-Path: /receipts/process
-Method: POST
-Payload: Receipt JSON
-Response: JSON containing an ID for the receipt
+-Path: /receipts/process
+-Method: POST
+-Payload: Receipt JSON
+-Response: JSON containing an ID for the receipt
 
 Endpoint: Get Points
 
-Path: /receipts/{id}/points
-Method: GET
-Response: A JSON object containing the number of points awarded
+-Path: /receipts/{id}/points
+-Method: GET
+-Response: A JSON object containing the number of points awarded
