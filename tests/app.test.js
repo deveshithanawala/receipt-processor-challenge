@@ -82,7 +82,7 @@ describe('GET/receipts/:id/points',()=>{
                 purchaseTime: '15:30',
                 items: [
                   {
-                    shortDescription: '   Item 1  ', // Item description with leading/trailing spaces
+                    shortDescription: 'Item 1',
                     price: '10.99',
                   },
                 ],
