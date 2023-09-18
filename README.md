@@ -178,11 +178,57 @@ take as much time as you need to complete the work.
 
 ### Solution 
 
-Commands :
+## SetUp 
+Ensure you have the following installed :
+1. Node JS (https://nodejs.org/)
+2. npm
+3. Docker
 
-1. node app.js to start the application
-2. To test example files open another terminal and use command:  curl -X POST -H "Content-Type: application/json" -d @examples/mandm-receipt.json http://localhost:3001/receipts/process
-The above command will make a POST request and return the recipt id 
-3. Next you can get the points by GET request : curl http://localhost:3001/receipts/id/points
+## Clone this Repository
+git clone https://github.com/yourusername/receipt-processing-service.git
+
+## Haviagte to Project Directory 
+
+cd receipt-processor-challenge 
+
+## Install Dependencies 
+
+npm install 
+
+## To start the application
+`node app.js`
+
+## To test POST Endpoint 
+There are some json files in the example folder 
+
+Open another terminal and use command:  
+`curl -X POST -H "Content-Type: application/json" -d @examples/mandm-receipt.json http://localhost:3001/receipts/process`
+
+Replace mandm-receipt.json with your test data in JSON Format
+
+The above command will make a POST request and return the reciept id 
+
+## Next you can get the points by GET request : 
+`curl http://localhost:3001/receipts/id/points`
+
 Replace id from the response generated after POST request
-4. For Unit Tests use the command npm test
+
+## For Tests use the command 
+`npm test`
+
+
+
+## API Specification
+
+Endpoint: Process Receipts
+
+Path: /receipts/process
+Method: POST
+Payload: Receipt JSON
+Response: JSON containing an ID for the receipt
+
+Endpoint: Get Points
+
+Path: /receipts/{id}/points
+Method: GET
+Response: A JSON object containing the number of points awarded
