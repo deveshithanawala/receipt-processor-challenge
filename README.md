@@ -174,7 +174,7 @@ There is no time limit for the exercise. Out of respect for your time, we design
 take as much time as you need to complete the work.
 
 
-### Solution 
+# Solution 
 
 ## SetUp 
 Ensure you have the following installed :
@@ -189,8 +189,7 @@ Ensure you have the following installed :
 
   2. Update the package list:
 
-   ```bash
-   sudo apt-get update
+  `sudo apt-get update`
 
   3. Install Node JS and npm
   `sudo apt-get install nodejs npm`
@@ -211,7 +210,7 @@ Ensure you have the following installed :
    `node -v`
    `npm -v`
 
-### macOS:
+### MacOS:
 
 1. Install Homebrew if you don't already have it.
 
@@ -258,14 +257,14 @@ To containerize the service use the following command
 
 
 ## To test POST Endpoint 
-There are some json files in the example folder 
+- There are some json files in the example folder 
 
-Open another terminal and use command:  
+- Open another terminal and use command:  
 `curl -X POST -H "Content-Type: application/json" -d @examples/mandm-receipt.json http://localhost:3001/receipts/process`
 
-Replace mandm-receipt.json with your test data in JSON Format
+- Replace mandm-receipt.json with your test data in JSON Format
 
-The above command will make a POST request and return the reciept id 
+- The above command will make a POST request and return the reciept id 
 
 ## Next you can get the points by GET request : 
 `curl http://localhost:3001/receipts/id/points`
