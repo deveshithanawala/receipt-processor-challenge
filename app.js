@@ -1,12 +1,11 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const { isValidDate, isValidTime } = require('./utils/app.validation');
 
 app.use(bodyParser.json());
 
-console.log("Hello")
 const receipts = {};
-
 
 function calculatePoints(receiptData) {
   let points = 0;
@@ -62,6 +61,14 @@ function calculatePoints(receiptData) {
 // POST Endpoint
 app.post('/receipts/process', (req, res) => {
   const receiptData = req.body;
+
+  if (!isValidDate(receiptData.purchaseDate)) {
+    return res.status(400).json({ error: 'Invalid purchaseDate format' });
+  }
+
+  if (!isValidTime(receiptData.purchaseTime)) {
+    return res.status(400).json({ error: 'Invalid purchaseTime format' });
+  }
 
   const receiptId = Math.random().toString(36).substring(7);
 

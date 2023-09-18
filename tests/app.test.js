@@ -1,11 +1,10 @@
-// Handle validation on invalid date/time values.
 // GITHUB 
+// Read Me
+// Dockerfile
 const { expect } = require('chai');
 const supertest = require('supertest');
 const app = require('../app'); 
 const request = supertest(app);
-
-const { v4: uuidv4 } = require('uuid');
 
 
 describe('POST/receipts/process',()=>{
@@ -32,42 +31,94 @@ describe('POST/receipts/process',()=>{
                     expect(res.body.id).to.be.a('string');
             
             });
-        });
+     });
+     it('should return a 400 status code for Invalid Purchase Date', ()=> {
+        const receiptData = {
+            retailer: 'Sample Retailer',
+            purchaseDate: '2023-23-15',
+            purchaseTime: '15:30',
+            items: [
+              {
+                shortDescription: 'Item 1',
+                price: '10.99',
+              },
+            ],
+            total: '10.99',
+          };
+      
+          request.post('/receipts/process')
+                 .send(receiptData)
+                 .expect(400)
+                 .end((err, res) => {
+                    expect(res.body).to.have.property('error', 'Invalid purchaseDate format');       
+            });
+     });
+     it('should return a 400 status code for Invalid Purchase Time', ()=> {
+        const receiptData = {
+            retailer: 'Sample Retailer',
+            purchaseDate: '2023-02-15',
+            purchaseTime: '25:30',
+            items: [
+              {
+                shortDescription: 'Item 1',
+                price: '10.99',
+              },
+            ],
+            total: '10.99',
+          };
+      
+          request.post('/receipts/process')
+                 .send(receiptData)
+                 .expect(400)
+                 .end((err, res) => {
+                    expect(res.body).to.have.property('error', 'Invalid purchaseTime format');       
+            });
+     });
 });
-// Check again
+
 describe('GET/receipts/:id/points',()=>{
-    describe('successfully gets the points given a reciept id',(done)=>{
-        it('should return the points for a valid receipt ID', async() => {
-            const validReceiptId = "12345";
-       
-            const res = await request.get(`/receipts/12345/points`);
-            console.log("Response",res);
-            expect(res.status).to.equal(200);
-            expect(res.body).to.have.property('points');
-            done();
-        });
+   it('should return the points for a valid receipt ID', async() => {
+
+            const receiptData = {
+                retailer: 'Sample Retailer',
+                purchaseDate: '2023-09-15',
+                purchaseTime: '15:30',
+                items: [
+                  {
+                    shortDescription: '   Item 1  ', // Item description with leading/trailing spaces
+                    price: '10.99',
+                  },
+                ],
+                total: '10.99',
+              };
+          
+              const postResponse = await request.post('/receipts/process').send(receiptData);
+              expect(postResponse.status).to.equal(200);
+
+              const receiptId = postResponse.body.id;
+              console.log("Receipt id", receiptId);
+            
+              // Make the GET request using await
+              const getResponse = await request.get(`/receipts/${receiptId}/points`);
+            
+              console.log("Get Response", getResponse.body);
+              expect(getResponse.status).to.equal(200);
+              expect(getResponse.body).to.have.property('points');
+    
     });
 
-    describe('Receipt not found',()=>{
-        it('should throw an appropriate error when ID is not found', (done) => {
-            const invalidReceiptId = 'byx1cby';
-      
-            request.get(`/receipts/${invalidReceiptId}/points`)
-              .expect(404)
-              .end((err, res) => {
-                if (err) return done(err);
-      
-                expect(res.body).to.have.property('error');
-                expect(res.body.error).to.equal('Receipt not found');
-      
-                done();
-              });
-          });
-        });
+    it('should throw an appropriate error when ID is not found', async() => {
+            const invalidReceiptId = 'byx1cby';      
+            const res = await request.get(`/receipts/${invalidReceiptId}/points`)
+            expect(res.status).to.equal(404);
+            expect(res.body).to.have.property('error');
+            expect(res.body.error).to.equal('Receipt not found');
+              
     });
+});
 
 describe('Receipt Processing', () => {
-  it('should trim item descriptions', (done) => {
+  it('should trim item descriptions', async() => {
     const receiptData = {
       retailer: 'Sample Retailer',
       purchaseDate: '2023-09-15',
@@ -86,20 +137,18 @@ describe('Receipt Processing', () => {
            .send(receiptData)
             .end((err, res) => {
         expect(200);
-        console.log("Response body",res.body);
 
         const receiptId = res.body.id;
         request.get(`/receipts/${receiptId}/points`)
         .end((err, res) => {
           expect(200);
-          console.log("Receipt data response", res.body);
           if (res.body && Array.isArray(res.body.items) && res.body.items.length > 0) {
             const trimmedDescription = res.body.items[0].shortDescription;
             expect(trimmedDescription).to.equal('Item 1');
           } else {
             console.error("Invalid response structure or empty items array");
           }
-          done();
+
       });
 
     });
@@ -134,7 +183,5 @@ describe('Receipt Processing', () => {
         // Points after rule 4 89
         // Points after rule 5 91
         // Points after rule 7 i.e. total = 101
-  });
-  
-
+  });  
 });
